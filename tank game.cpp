@@ -8,22 +8,22 @@
 
 
 
-int randNumber(int a, int b)	//funkcia na generovanie random cisla
+int randNumber(int a, int b)	//generate random number
 {
 	return rand() % (b - a + 1) + a;
 }
 
-void printPlayers(char str[], int t1, int t2)	//umiestnenie hracov
+void printPlayers(char str[], int t1, int t2)	//place players
 {
 	while (1)
 	{
-		if (str[t1] == '.')	//t1 suradnica hraca
+		if (str[t1] == '.')	//t1 coord of player
 		{
-			str[t1] = 'H';	//hrac
+			str[t1] = 'H';	//player
 		}
-		if (str[t2] == '.')	//t2 suradnica pocitacu
+		if (str[t2] == '.')	//t2 coord of PC
 		{
-			str[t2] = 'P';	//pocitac
+			str[t2] = 'P';	//PC
 		}
 		break;
 		printf("%s", str);
@@ -35,63 +35,63 @@ int pocet_zivotov_HRACA = 3;
 
 int hra(char str[], int t1, int t2)
 {
-	printf("ZACIATOK HRY\n\n*************************************************\nZivoty hraca : 3\nZivoty pocitaca : 3\n*************************************************\n\n");
-	printf("VYSTREL NASLEPO, OTESTUJ SVOJE SCHOPNOSTI PREDATORA\n");
+	printf("GAME BEGINS\n\n*************************************************\nPlayer's HP : 3\nPC's HP : 3\n*************************************************\n\n");
+	printf("TRY BLIND SHOT, TEST YOUR SKILLs OF PREDATOR\n");
 	while (1)
 	{
-		//HRAC JE NA RADE
+		//Players turn
 		int rychlost, uhol;
-		printf("\n\n\nIde hrac\nZadaj rychlost vystrelu: \n");
+		printf("\n\n\nPlayer's turn\nEnter speed of shot: \n");
 		scanf("%d", &rychlost);
-		printf("Zadaj uhol vystrelu: \n");
+		printf("Enter angle of shot: \n");
 		scanf("%d", &uhol);
 		int dostrel;
 		dostrel =t1+  rychlost + uhol;
-		memcpy(str + dostrel, "*", 1);	//zobrazi zasah
+		memcpy(str + dostrel, "*", 1);	//shows hit
 		printf("%s", str);
-		memcpy(str +  dostrel, ".", 1);	//vrati pole do povodneho stavu
-		if (dostrel > 100) // ak je dostrel vacsi ako hracia plocha
+		memcpy(str +  dostrel, ".", 1);	//initial state of array
+		if (dostrel > 100) // if the shot hit too far
 		{
-			printf("*************************************************\nSTRIELAS MOC DALEKO!\n*************************************************\n\n\n\n");
+			printf("*************************************************\nYOU ARE SHOOTING TOO FAR!\n*************************************************\n\n\n\n");
 		}
-		if (dostrel == t2)	//ak sme sa trafili tak pocitacu ubudne 1hp... ak ma 0hp konci sa hra
+		if (dostrel == t2)	//if PC is hit 1hp... if PC has 0hp game ends
 		{
 			pocet_zivotov_PC = pocet_zivotov_PC - 1;
-			printf("*************************************************\nTrafil si\nPocet zivotov PC : %d\n*************************************************\n\n\n\n", pocet_zivotov_PC);
-			memcpy(str +  dostrel, "P", 1);	//znova zobrazi tank pocitaca
+			printf("*************************************************\nYou hit\nPC's HP : %d\n*************************************************\n\n\n\n", pocet_zivotov_PC);
+			memcpy(str +  dostrel, "P", 1);	//show tank of PC again
 			if (pocet_zivotov_PC == 0)
 			{
-				printf("*************************************************\nVyhral si\n*************************************************\n");
+				printf("*************************************************\nYou won\n*************************************************\n");
 				break;
 			}
 		}
 		
 		
 		
-		//POCITAC JE NA RADE
-		printf("\n\n\nIde pocitac\n");
+		//PCs turn
+		printf("\n\n\nPC's turn\n");
 		srand(time(0));
 		rychlost = randNumber(1, 20);
 		uhol = randNumber(1, 20);
 		int x = rychlost + uhol ;
 		int dostrel1 = (100 - (100 - t2) - x);
-		printf("Pocitac zadal rychlost vystrelu:\n%d", rychlost);
-		printf("\nPocitac zadal uhol vystrelu:\n%d\n", uhol);
+		printf("PC entered speed of shot:\n%d", rychlost);
+		printf("\nPC entered angle of shot:\n%d\n", uhol);
 		memcpy(str + dostrel1, "+", 1);
 		printf("%s", str);
 		memcpy(str + dostrel1, ".", 1);
 		if (dostrel1 < 0)
 		{
-			printf("*************************************************\nPOCITAC STRELIL MOC DALEKO!\n*************************************************\n\n\n\n");
+			printf("*************************************************\nPC IS SHOOTING TOO FAR!\n*************************************************\n\n\n\n");
 		}
 		if (dostrel1 == t1)
 		{
 			pocet_zivotov_HRACA = pocet_zivotov_HRACA - 1;
-			printf("*************************************************\nPocitac sa trafil\nPocet zivotov HRACA : %d\n*************************************************\n\n\n\n", pocet_zivotov_HRACA);
-			memcpy(str + dostrel1, "H", 1);	//znova zobrazi tank hraca
+			printf("*************************************************\nPC hit you\nPlayer's HP : %d\n*************************************************\n\n\n\n", pocet_zivotov_HRACA);
+			memcpy(str + dostrel1, "H", 1);	//show players tank again
 			if (pocet_zivotov_HRACA == 0)
 			{
-				printf("*************************************************\nVyhral pocitac\n*************************************************\n");
+				printf("*************************************************\nPC won\n*************************************************\n");
 				break;
 			}
 		}
@@ -106,7 +106,7 @@ int main()
 	t1 = randNumber(0, 49);
 	t2 = randNumber(50, 100);
 
-	char str[] = ".....................................................................................................\n\n\n\n\n";	//hracia plocha 100 characterov
+	char str[] = ".....................................................................................................\n\n\n\n\n";	//game field (100 characters)
 
 	printPlayers(str, t1, t2);
 	hra(str, t1, t2);
