@@ -8,6 +8,7 @@ Player = H,
 PC = P
 
 Player has to choose appropriate speed and angle of shot and type it in console when asked.
+After player's turn the PC shoots.
 Both player and PC are spawned randomly with 3 HP. 
 To win you need to hit enemy 3 times.
 
