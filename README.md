@@ -4,8 +4,8 @@ Interactive console game simulating fight of 2 tanks.
 
 One tank is controled by player and the second one is controled by PC (AI).
 
-Player = H,
-PC = P
+Player = H / 
+ PC = P
 
 Player has to choose appropriate speed and angle of shot and type it in console when asked.
 After player's turn the PC shoots.
